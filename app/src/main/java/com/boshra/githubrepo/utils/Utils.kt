@@ -3,7 +3,6 @@ package com.boshra.githubrepo.utils
 import android.content.Context
 import android.content.DialogInterface
 import android.support.v7.app.AlertDialog
-import android.support.v4.content.ContextCompat.getSystemService
 import android.net.ConnectivityManager
 import com.boshra.githubrepo.dataModel.Repo
 import com.boshra.githubrepo.database.Repository

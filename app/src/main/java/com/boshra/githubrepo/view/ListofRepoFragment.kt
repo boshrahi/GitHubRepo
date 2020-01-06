@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.*
 import android.view.ViewGroup
-import android.widget.Toast
 import com.boshra.githubrepo.R
 import com.boshra.githubrepo.dataModel.Repo
 import com.boshra.githubrepo.utils.EndlessListListener
@@ -23,8 +22,6 @@ import com.boshra.githubrepo.utils.Utils
 
 class ListofRepoFragment : Fragment(), ListCallback, DatabaseCallback, OnViewHolderClickListener {
 
-    val INITIAL_LOAD = 0
-    val SCROLL_LOAD = 1
     var BASE_PAGE = 300
     var adapter: RepoListAdapter? = null
     var layoutManager: LinearLayoutManager? = null
@@ -130,7 +127,8 @@ class ListofRepoFragment : Fragment(), ListCallback, DatabaseCallback, OnViewHol
 
     override fun onStop() {
         super.onStop()
-        reposViewModel?.cancelReposRequest()
+        reposViewModel = null
+        dataBaseViewModel = null
 
     }
 }
