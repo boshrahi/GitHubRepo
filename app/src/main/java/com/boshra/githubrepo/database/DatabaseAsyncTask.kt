@@ -2,6 +2,7 @@ package com.boshra.githubrepo.database
 
 import android.os.AsyncTask
 import com.boshra.githubrepo.dataModel.Repo
+import com.boshra.githubrepo.utils.Utils
 
 
 class DatabaseAsyncTask() : AsyncTask<Void, Void, Void>() {
@@ -34,7 +35,7 @@ class DatabaseAsyncTask() : AsyncTask<Void, Void, Void>() {
     override fun doInBackground(vararg params: Void?): Void? {
         when (type) {
             TYPE_INSERT_ALL -> {
-                val array = createArrayOfData(list!!)
+                val array = Utils().createArrayOfData(list!!)
                 val repoDao = database.getRepoDAO()
                 try {
                     repoDao.insertAllRepos(*array)
@@ -75,38 +76,9 @@ class DatabaseAsyncTask() : AsyncTask<Void, Void, Void>() {
             }
             TYPE_SELECT_ALL -> {
                 if (errorString != null) databaseApi.onDataOpError(errorString!!)
-                else databaseApi.onSelectAllRepos(resultModifier(selectResult)!!)
+                else databaseApi.onSelectAllRepos(Utils().resultModifier(selectResult)!!)
 
             }
         }
-    }
-
-
-    fun createArrayOfData(list: ArrayList<Repo>): Array<Repository?> {
-        val size = list.size
-        val array = arrayOfNulls<Repository>(size)
-        for (i in 0 until size) {
-            val repo = list.get(i)
-            array[i] = Repository(
-                i.toString(), repo.name, repo.full_name, repo.description
-            )
-        }
-        return array
-    }
-
-    fun resultModifier(result: List<Repository>): ArrayList<Repo>? {
-        val modified = ArrayList<Repo>()
-        for (i in 0 until result.size) {
-            val repository = result.get(i)
-            modified.add(
-                Repo(
-                    repository.id.toInt(),
-                    repository.name,
-                    repository.full_name,
-                    repository.description
-                )
-            )
-        }
-        return modified
     }
 }

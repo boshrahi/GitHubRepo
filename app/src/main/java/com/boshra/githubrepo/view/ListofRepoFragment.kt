@@ -18,10 +18,13 @@ import com.boshra.githubrepo.viewmodel.DatabaseViewModel
 import com.boshra.githubrepo.viewmodel.ListCallback
 import com.boshra.githubrepo.viewmodel.ReposViewModel
 import kotlinx.android.synthetic.main.fragment_list_repos.*
+import com.boshra.githubrepo.utils.Utils
 
 
 class ListofRepoFragment : Fragment(), ListCallback, DatabaseCallback, OnViewHolderClickListener {
 
+    val INITIAL_LOAD = 0
+    val SCROLL_LOAD = 1
     var BASE_PAGE = 300
     var adapter: RepoListAdapter? = null
     var layoutManager: LinearLayoutManager? = null
@@ -30,8 +33,7 @@ class ListofRepoFragment : Fragment(), ListCallback, DatabaseCallback, OnViewHol
 
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(com.boshra.githubrepo.R.layout.fragment_list_repos, container, false)
     }
 
@@ -39,10 +41,7 @@ class ListofRepoFragment : Fragment(), ListCallback, DatabaseCallback, OnViewHol
         super.onStart()
         reposViewModel = ReposViewModel(this)
         dataBaseViewModel = DatabaseViewModel(this, activity!!)
-
-        val emptyList = arrayListOf<Repo>()
-        setListAdapter(emptyList)
-        dataBaseViewModel?.getRecentRepos()
+        loadData()
     }
 
     //Network Callback-----------------------------------------------------
@@ -56,10 +55,11 @@ class ListofRepoFragment : Fragment(), ListCallback, DatabaseCallback, OnViewHol
 
     }
     override fun onListFetchError(networkResponse: String) {
-        //TODO handle errors properly
-        Toast.makeText(activity, networkResponse, Toast.LENGTH_SHORT).show()
-        println(networkResponse)
-        progressLayoutGone()
+        if (isVisible) {
+            println("Network Error : = " +networkResponse)
+            progressLayoutGone()
+        }
+        Utils().showAlertDialog("Error","Something wrong with loading data.",this.requireContext())
     }
     // DataBase Callbacks---------------------------------------------------------
     override fun onDBDataFetch(list: ArrayList<Repo>) {
@@ -73,18 +73,21 @@ class ListofRepoFragment : Fragment(), ListCallback, DatabaseCallback, OnViewHol
     }
 
     override fun onDBDataFetchError(response: String) {
-        //TODO handle errors properly
         println("Database Error : = " + response)
-        Toast.makeText(activity, response, Toast.LENGTH_LONG).show()
+        Utils().showAlertDialog("Error","Something wrong with loading data.",this.requireContext())
     }
     //List Click Callback---------------------------------------------------------------------
     override fun onItemClicked(repo: Repo) {
-        val detailsFragment = DetailsFragment().getInstance(repo)
-        val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
-        fragmentTransaction.addToBackStack("DetailsFragment")
-        fragmentTransaction.replace(R.id.main_layout, detailsFragment)
-        fragmentTransaction.commit()
-        println(repo.toString())
+        if( Utils().networkAvailable(this.requireContext())){
+            val detailsFragment = DetailsFragment().getInstance(repo)
+            val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+            fragmentTransaction.addToBackStack("DetailsFragment")
+            fragmentTransaction.replace(R.id.main_layout, detailsFragment)
+            fragmentTransaction.commit()
+            println(repo.toString())
+        }else{
+            Utils().showAlertDialog("Error","Something wrong with loading data.",this.requireContext())
+        }
     }
 
     //Useful methods----------------------------------------------------------
@@ -108,21 +111,26 @@ class ListofRepoFragment : Fragment(), ListCallback, DatabaseCallback, OnViewHol
     private fun setEndlessListEnable() {
         list_repos_rv.addOnScrollListener(object : EndlessListListener(list_repos_rv.layoutManager!!, 3) {
             override fun onLoadMore() {
-                endless_layout.visibility = VISIBLE
-                BASE_PAGE = BASE_PAGE + 100 //next 100 batch of repos
-                reposViewModel?.loadReposData(BASE_PAGE, activity)
+                loadMoreData()
             }
         })
+    }
+    private fun loadData() {
+        val emptyList = arrayListOf<Repo>()
+        setListAdapter(emptyList)
+        dataBaseViewModel?.getRecentRepos()
+        list_progress_bar.visibility = VISIBLE
+    }
+
+    private fun loadMoreData() {
+        endless_layout.visibility = VISIBLE
+        BASE_PAGE = BASE_PAGE + 100 //next 100 batch of repos
+        reposViewModel?.loadReposData(BASE_PAGE, activity)
     }
 
     override fun onStop() {
         super.onStop()
         reposViewModel?.cancelReposRequest()
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
 
     }
 }
