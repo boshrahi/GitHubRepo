@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">GithubRepo</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="read_me">Storm is a distributed realtime computation system. Similar to how Hadoop provides a set
+        of general primitives for doing batch processing, Storm provides a set of general primitives for doing realtime
+        computation. Storm is simple, can be used with any programming language, is used by many companies, and is a lot of fun to use!
+        The Rationale page explains what Storm is and why it was built. This presentation is also a good introduction to the project.
+        Storm has a website at storm.apache.org. Follow @stormprocessor on Twitter for updates on the project.\n
+        Storm developers should send messages and subscribe to dev@storm.apache.org.
+        You can subscribe to this list by sending an email to dev-subscribe@storm.apache.org.
+        Likewise, you can cancel a subscription by sending an email to dev-unsubscribe@storm.apache.org.
+        You can also browse the archives of the storm-dev mailing list. Storm developers who would want to track the
+        JIRA issues should subscribe to issues@storm.apache.org.
+        You can subscribe to this list by sending an email to issues-subscribe@storm.apache.org.
+        Likewise, you can cancel a subscription by sending an email to issues-unsubscribe@storm.apache.org.
+    </string>
+</resources>
