@@ -14,4 +14,7 @@
         You can subscribe to this list by sending an email to issues-subscribe@storm.apache.org.
         Likewise, you can cancel a subscription by sending an email to issues-unsubscribe@storm.apache.org.
     </string>
+    <string name="description_title">DESCRIPTION</string>
+    <string name="read_me_title">READ ME</string>
+    <string name="description_preview_txt">...</string>
 </resources>

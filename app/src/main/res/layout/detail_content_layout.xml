@@ -6,16 +6,16 @@
         android:id="@+id/contentConstraint"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/headerConstraint"
-        android:padding="@dimen/padding_header">
+        app:layout_constraintStart_toStartOf="parent">
     <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selectable_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="@dimen/margin_card_view"
+            android:padding="@dimen/padding_card_view" app:layout_constraintBottom_toBottomOf="parent">
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"

@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="titleSize">18dp</dimen>
-    <dimen name="padding_header">16dp</dimen>
+
+
+    <dimen name="padding_header_layout">16dp</dimen>
+    <dimen name="padding_card_view">4dp</dimen>
+    <dimen name="margin_card_view">8dp</dimen>
+    <dimen name="margin_recycler_view">8dp</dimen>
+
+    <!--font size -->
+    <dimen name="font_size_small">10sp</dimen>
+    <dimen name="font_size_normal">12sp</dimen>
+    <dimen name="font_size_medium">14sp</dimen>
+    <dimen name="font_size_large">16sp</dimen>
+    <dimen name="font_size_huge">18sp</dimen>
+    <dimen name="font_size_super_huge">20sp</dimen>
+
+    <dimen name="endless_layout_height">64dp</dimen>
+    <dimen name="circle_progress_bar_width">48dp</dimen>
+    <dimen name="circle_progress_bar_height">48dp</dimen>
+    <dimen name="list_row_height_height">81dp</dimen>
+    <dimen name="list_row_icon_width">20dp</dimen>
+    <dimen name="list_row_icon_height">20dp</dimen>
+
+    <dimen name="icon_profile_margin">8dp</dimen>
+    <dimen name="icon_profile_width">48dp</dimen>
+    <dimen name="icon_profile_height">48dp</dimen>
+
+    <dimen name="header_main_cover_height">148dp</dimen>
+    <dimen name="header_main_height">210dp</dimen>
+    <dimen name="header_main_cover_icon_size">100dp</dimen>
+    <dimen name="header_icon_size">24dp</dimen>
+
+    <dimen name="icon_avatar_width">92dp</dimen>
+    <dimen name="icon_avatar_height">92dp</dimen>
+
 </resources>

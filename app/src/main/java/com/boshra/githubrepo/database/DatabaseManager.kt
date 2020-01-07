@@ -1,12 +1,8 @@
 package com.boshra.githubrepo.database
 
 import android.arch.persistence.room.Room
-import android.os.AsyncTask
 import android.support.v4.app.FragmentActivity
 import com.boshra.githubrepo.dataModel.Repo
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 
 
 class DatabaseManager() {

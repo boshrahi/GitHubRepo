@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
+import com.android.volley.toolbox.ImageLoader
 import com.boshra.githubrepo.AppController
 import com.boshra.githubrepo.R
 import com.boshra.githubrepo.dataModel.Details
@@ -14,6 +15,7 @@ import com.boshra.githubrepo.dataModel.Repo
 import com.boshra.githubrepo.viewmodel.DetailCallback
 import com.boshra.githubrepo.viewmodel.DetailsViewModel
 import kotlinx.android.synthetic.main.detail_content_layout.*
+import kotlinx.android.synthetic.main.detail_header_layout.*
 import kotlinx.android.synthetic.main.detail_readme_layout.*
 import kotlinx.android.synthetic.main.fragment_details.*
 
@@ -23,6 +25,7 @@ class DetailsFragment : Fragment(), DetailCallback, View.OnClickListener{
     val ARG_KEY: String = "DetailsFragment-details-key"
     lateinit var detailsViewModel: DetailsViewModel
     lateinit var repo : Repo
+    lateinit var imageViewLoader: ImageLoader
 
 
     fun getInstance(repo: Repo) : DetailsFragment{
@@ -46,13 +49,14 @@ class DetailsFragment : Fragment(), DetailCallback, View.OnClickListener{
         }else{
             fragmentManager?.popBackStack()
         }
+        imageViewLoader = AppController.getInstance(context!!.applicationContext).imageLoader
         detail_fork_layout.setOnClickListener(this)
         detail_issue_layout.setOnClickListener(this)
         detail_star_layout.setOnClickListener(this)
 
     }
     override fun onDetailsFetched(result: Details) {
-        progressLoading.visibility = GONE
+        details_progressLoading.visibility = GONE
 
         detail_fork_tv.text = numberModifire(result.forks_count)
         detail_issue_tv.text = numberModifire(result.open_issues)
@@ -62,7 +66,7 @@ class DetailsFragment : Fragment(), DetailCallback, View.OnClickListener{
         detail_project_name_tv.text = repo.name
         detail_des_tv.text = repo.description
         avatar_url_iv.setDefaultImageResId(R.drawable.ic_user)
-        avatar_url_iv.setImageUrl(result.owner?.avatar_url,AppController.instance?.imageLoader)
+        avatar_url_iv.setImageUrl(result.owner?.avatar_url,imageViewLoader)
     }
 
     private fun numberModifire(number: Int?): String? {
