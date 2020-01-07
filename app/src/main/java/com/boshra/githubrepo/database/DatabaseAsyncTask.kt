@@ -45,8 +45,9 @@ class DatabaseAsyncTask() : AsyncTask<Void, Void, Void>() {
             }
             TYPE_DELETE_INSERT_ALL -> {
                 try {
+                    val array = Utils().createArrayOfData(list!!)
                     val repoDao = database.getRepoDAO()
-                    repoDao.deleteAllRepos()
+                    repoDao.deleteAndInsertRepos(array)
                 } catch (error: Exception) {
                     errorString = "deleteRecentReposDB " + error.message.toString()
                 }
