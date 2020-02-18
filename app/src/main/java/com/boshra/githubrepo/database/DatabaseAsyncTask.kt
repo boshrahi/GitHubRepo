@@ -1,6 +1,7 @@
 package com.boshra.githubrepo.database
 
 import android.os.AsyncTask
+import com.boshra.githubrepo.dataModel.Details
 import com.boshra.githubrepo.dataModel.Repo
 import com.boshra.githubrepo.utils.Utils
 
@@ -14,12 +15,12 @@ class DatabaseAsyncTask() : AsyncTask<Void, Void, Void>() {
 
     lateinit var databaseApi: DatabaseApi
     lateinit var database: AppDatabase
-    var list: ArrayList<Repo>? = null
+    var list: ArrayList<Details>? = null
     var errorString: String? = null
     lateinit var selectResult: List<Repository>
     var type: Int = -1
 
-    constructor(databaseApi: DatabaseApi, database: AppDatabase, type: Int, list: ArrayList<Repo>?) : this() {
+    constructor(databaseApi: DatabaseApi, database: AppDatabase, type: Int, list: ArrayList<Details>?) : this() {
         this.databaseApi = databaseApi
         this.database = database
         this.type = type

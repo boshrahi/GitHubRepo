@@ -8,7 +8,7 @@ data class Owner(var login: String?="Not Available", var avatar_url: String?="No
     constructor(parcel: Parcel) : this(
         parcel.readString(),
         parcel.readString()
-    ){}
+    )
 
     override fun describeContents(): Int {
         TODO("not implemented")

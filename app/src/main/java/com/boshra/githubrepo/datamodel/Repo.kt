@@ -3,6 +3,7 @@ package com.boshra.githubrepo.dataModel
 import android.os.Parcel
 import android.os.Parcelable
 
+
 data class Repo(var id: Int? = null,
                 var name: String?="Not Available",
                 var full_name: String?="Not Available",
@@ -13,9 +14,7 @@ data class Repo(var id: Int? = null,
         parcel.readString(),
         parcel.readString(),
         parcel.readString()
-    ) {
-    }
-
+    )
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeValue(id)
         parcel.writeString(name)

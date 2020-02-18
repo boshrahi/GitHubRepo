@@ -1,6 +1,6 @@
 package com.boshra.githubrepo.database
 
-import android.arch.persistence.room.*
+import androidx.room.*
 
 
 @Dao

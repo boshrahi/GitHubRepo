@@ -1,6 +1,7 @@
 package com.boshra.githubrepo.viewmodel
 
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.FragmentActivity
+import com.boshra.githubrepo.dataModel.Details
 import com.boshra.githubrepo.dataModel.Repo
 import com.boshra.githubrepo.database.DatabaseApi
 import com.boshra.githubrepo.database.DatabaseManager
@@ -20,12 +21,12 @@ class DatabaseViewModel() : DatabaseApi {
         databaseManager.getRecentReposDBAsync()
 
     }
-    fun deleteAndInsertRepos(list: ArrayList<Repo>){
-        val subList = ArrayList<Repo>(list.subList(0, list.size-1))
+    fun deleteAndInsertRepos(list: ArrayList<Details>){
+        val subList = ArrayList<Details>(list.subList(0, list.size-1))
         val databaseManager : DatabaseManager = DatabaseManager(context,this)
         databaseManager.deleteAndInsertReposAsync(subList)
     }
-    override fun onSelectAllRepos(list: ArrayList<Repo>) {
+    override fun onSelectAllRepos(list: ArrayList<Details>) {
         databaseCallback.onDBDataFetch(list)
     }
 
@@ -35,6 +36,6 @@ class DatabaseViewModel() : DatabaseApi {
 
 }
 interface DatabaseCallback{
-    fun onDBDataFetch(list: ArrayList<Repo>)
+    fun onDBDataFetch(list: ArrayList<Details>)
     fun onDBDataFetchError(response: String)
 }

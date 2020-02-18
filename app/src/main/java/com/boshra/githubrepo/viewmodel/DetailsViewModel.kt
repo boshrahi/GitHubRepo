@@ -1,6 +1,6 @@
 package com.boshra.githubrepo.viewmodel
 
-import android.support.v4.app.FragmentActivity
+import androidx.fragment.app.FragmentActivity
 import com.boshra.githubrepo.dataModel.Details
 import com.boshra.githubrepo.dataModel.Repo
 import com.boshra.githubrepo.model.DetailsApiService
@@ -22,7 +22,7 @@ open class DetailsViewModel(): DetailsApiService {
     override fun onDetailsDataFetchError(networkResponse: String) {
         detailCallback.onDetailsFetchError(networkResponse)
     }
-    fun loadDReposDetails(repo :Repo,context:FragmentActivity?){
+    fun loadDReposDetails(repo :Repo,context: FragmentActivity?){
         downloadManager = DownloadManager(repo.full_name!!,context,this)
         downloadManager!!.loadSingleRepos(repo.full_name!!)
     }

@@ -2,13 +2,11 @@ package com.boshra.githubrepo.view
 
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import com.android.volley.toolbox.ImageLoader
-import com.boshra.githubrepo.AppController
+import androidx.fragment.app.Fragment
 import com.boshra.githubrepo.R
 import com.boshra.githubrepo.dataModel.Details
 import com.boshra.githubrepo.dataModel.Repo
@@ -25,7 +23,6 @@ class DetailsFragment : Fragment(), DetailCallback, View.OnClickListener{
     val ARG_KEY: String = "DetailsFragment-details-key"
     lateinit var detailsViewModel: DetailsViewModel
     lateinit var repo : Repo
-    lateinit var imageViewLoader: ImageLoader
 
 
     fun getInstance(repo: Repo) : DetailsFragment{
@@ -49,7 +46,7 @@ class DetailsFragment : Fragment(), DetailCallback, View.OnClickListener{
         }else{
             fragmentManager?.popBackStack()
         }
-        imageViewLoader = AppController.getInstance(context!!.applicationContext).imageLoader
+        //imageViewLoader = AppController.getInstance(context!!.applicationContext).imageLoader
         detail_fork_layout.setOnClickListener(this)
         detail_issue_layout.setOnClickListener(this)
         detail_star_layout.setOnClickListener(this)
@@ -65,8 +62,8 @@ class DetailsFragment : Fragment(), DetailCallback, View.OnClickListener{
         detail_developer_name_tv.text = result.owner?.login.toString()
         detail_project_name_tv.text = repo.name
         detail_des_tv.text = repo.description
-        avatar_url_iv.setDefaultImageResId(R.drawable.ic_user)
-        avatar_url_iv.setImageUrl(result.owner?.avatar_url,imageViewLoader)
+//        avatar_url_iv.setDefaultImageResId(R.drawable.ic_user)
+//        avatar_url_iv.setImageUrl(result.owner?.avatar_url,imageViewLoader)
     }
 
     private fun numberModifire(number: Int?): String? {

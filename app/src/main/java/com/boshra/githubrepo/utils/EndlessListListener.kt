@@ -1,7 +1,8 @@
 package com.boshra.githubrepo.utils
 
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 
 abstract class EndlessListListener(private val layoutManager: RecyclerView.LayoutManager, private val visibleThreshold: Int)

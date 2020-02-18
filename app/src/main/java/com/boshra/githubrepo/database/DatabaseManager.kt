@@ -1,8 +1,8 @@
 package com.boshra.githubrepo.database
 
-import android.arch.persistence.room.Room
-import android.support.v4.app.FragmentActivity
-import com.boshra.githubrepo.dataModel.Repo
+import androidx.room.Room
+import androidx.fragment.app.FragmentActivity
+import com.boshra.githubrepo.dataModel.Details
 
 
 class DatabaseManager() {
@@ -22,7 +22,7 @@ class DatabaseManager() {
 
     }
 
-    fun insertRecentReposIntoDBAsync(list: ArrayList<Repo>) {
+    fun insertRecentReposIntoDBAsync(list: ArrayList<Details>) {
         DatabaseAsyncTask(databaseApi,database,DatabaseAsyncTask().TYPE_INSERT_ALL,list).execute()
     }
 
@@ -30,7 +30,7 @@ class DatabaseManager() {
         DatabaseAsyncTask(databaseApi,database,DatabaseAsyncTask().TYPE_SELECT_ALL,null).execute()
     }
 
-    fun deleteAndInsertReposAsync(list: ArrayList<Repo>) {
+    fun deleteAndInsertReposAsync(list: ArrayList<Details>) {
         DatabaseAsyncTask(databaseApi,database,DatabaseAsyncTask().TYPE_DELETE_INSERT_ALL,list).execute()
     }
 

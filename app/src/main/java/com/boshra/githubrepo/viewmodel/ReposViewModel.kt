@@ -1,37 +1,56 @@
 package com.boshra.githubrepo.viewmodel
 
-import android.support.v4.app.FragmentActivity
-import com.boshra.githubrepo.dataModel.Repo
-import com.boshra.githubrepo.model.DownloadManager
-import com.boshra.githubrepo.model.RepoApiService
-import com.boshra.githubrepo.view.ListofRepoFragment
 
-class ReposViewModel() : RepoApiService {
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.boshra.githubrepo.dataModel.Details
+import com.boshra.githubrepo.model.GitHubService
+import com.boshra.githubrepo.model.createGitHubService
+import com.boshra.githubrepo.model.loadDetailsChannels
+import kotlinx.coroutines.*
 
-    lateinit var listCallback: ListCallback
-    lateinit var downloadManager : DownloadManager
 
-    constructor (listCallback: ListCallback) : this() {
-        this.listCallback = listCallback
+class ReposViewModel: ViewModel() {
 
+    private var viewModelJob = Job()
+    private val coroutineScope = CoroutineScope(viewModelJob + Dispatchers.Main)
+    lateinit var service: GitHubService
+
+
+    private val _repoData = MutableLiveData<ArrayList<Details>>()
+    val repoData: LiveData<ArrayList<Details>>
+        get() = _repoData
+
+    private val _itemData = MutableLiveData<Details>()
+    val itemData: LiveData<Details>
+        get() = _itemData
+
+    init {
+        println("initial of viewModel")
+        loadReposData(100)
     }
-    fun loadReposData(next_head:Int,context: FragmentActivity?){
-        downloadManager = DownloadManager(next_head,context,this)
-        downloadManager.loadAllRepos()
-    }
-    fun cancelReposRequest() {
-        downloadManager.cancelReposRequest()
-    }
-    override fun onRepositoryFetched(repos: ArrayList<Repo>) {
-        listCallback.onListFetched(repos)
+
+    fun loadReposData(next_head: Int) {
+        service = createGitHubService()
+
+        coroutineScope.launch {
+            loadDetailsChannels(service, next_head,
+                { repos_details ->
+                    withContext(Dispatchers.Main) {
+                        _repoData.value = repos_details
+                    }
+                },
+                { item_data ->
+                    withContext(Dispatchers.Main) {
+                        _itemData.value = item_data
+                    }
+                })
+        }
     }
 
-    override fun onRepoDataFetchError(networkResponse: String) {
-        listCallback.onListFetchError(networkResponse)
+    override fun onCleared() {
+        super.onCleared()
+        viewModelJob.cancel()
     }
-
-}
-interface ListCallback{
-    fun onListFetched(list: ArrayList<Repo>)
-    fun onListFetchError(networkResponse: String)
 }

@@ -11,10 +11,9 @@ import android.graphics.Bitmap.Config
 import android.graphics.PorterDuff.Mode
 import android.graphics.drawable.BitmapDrawable
 import android.util.AttributeSet
+import android.widget.ImageView
 
-import com.android.volley.toolbox.NetworkImageView
-
-class CircleImageView : NetworkImageView {
+class CircleImageView : ImageView {
     internal var mContext: Context
 
     constructor(context: Context) : super(context) {
